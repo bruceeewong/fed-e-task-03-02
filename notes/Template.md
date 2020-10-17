@@ -76,6 +76,12 @@
 
  _c 与 $createElement q区别在于最后一个参数如何处理children
 
+### 选项的 render 与 template 是怎么选择的？
+
+> platforms/web/entry-runtime-with-compiler.js
+
+先判断是否存在`render`属性，如果没有再取`template`属性，如果再没有，取根节点l`属性
+
 ### vue模板渲染缩写的函数参照
 
 ```js
@@ -193,6 +199,17 @@ res.staticRenderFns = compiled.staticRenderFns.map(code => {
     return createFunction(code, fnGenErrors)
 })
 ```
+
+## 试题错题
+
+关于模板编译描述正确的是：
+
+- 单文件组件template模板是在执行过程中被编译成render函数　X -> 是在构建过程
+- 模板和插值表达式在编译的过程中都会被转为对应的代码形式，不会出现在 render 函数中　-> 模板和插值表达式字符串会被编译成代码形式，字符串不会出现在render函数中
+
+关于组件说法，正确的是：
+
+- 在 createElement() 函数中调用createComponent() 函数创建了组件对象 X -> createComponent()返回Vnode。组件对象是在组件init钩子函数中创建，然后在patch()->createElm()->createComponent()中挂在组件。
 
 
 
